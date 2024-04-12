@@ -65,10 +65,6 @@ model = load_model(
 # TODO: use the inference function to run the model inferences on the test dataset.
 preds = inference(model, X_test)
 
-# Calculate and print the metrics
-p, r, fb = compute_model_metrics(y_test, preds)
-print(f"Precision: {p:.4f} | Recall: {r:.4f} | F1: {fb:.4f}")
-
 # TODO: compute the performance on model slices using the performance_on_categorical_slice function
 # iterate through the categorical features
 for col in cat_features:
@@ -76,7 +72,7 @@ for col in cat_features:
     for slicevalue in sorted(test[col].unique()):
         count = test[test[col] == slicevalue].shape[0]
         p, r, fb = performance_on_categorical_slice(
-            test, col, slicevalue, model, encoder, lb
+                data, col, slicevalue, cat_features, label="salary", encoder, lb, model
         )
         with open("slice_output.txt", "a") as f:
             print(f"{col}: {slicevalue}, Count: {count:,}", file=f)

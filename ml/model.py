@@ -68,8 +68,6 @@ def inference(model, X):
     # Use the predict method of the RandomForestClassifier to make predictions
     preds = model.predict(X)
 
-    # Convert binary predictions to string labels
-    #preds = np.vectorize(apply_label)(preds)
 
     # Return the predictions
     return preds
@@ -132,14 +130,31 @@ def performance_on_categorical_slice(
     fbeta : float
 
     """
-    X_slice, y_slice, _, _ = process_data(
-        data,
-        categorical_features=[column_name],
-        label=label,
-        training=False,
-        encoder=encoder,
-        lb=lb,
-    )
-    preds = inference(model, X_slice)
-    precision, recall, fbeta = compute_model_metrics(y_slice, preds)
-    return precision, recall, fbeta
+    # Filter the data to include only the rows with the specified categorical feature value
+    X_slice = data[data[column_name] == slice_value].drop(columns=[column_name, label])
+    y_slice = data[data[column_name] == slice_value][label]
+
+    # Check if all of the categorical features are present in the X_slice DataFrame
+    missing_features = set(categorical_features) - set(X_slice.columns)
+    if missing_features:
+        raise ValueError(f"Missing categorical features: {missing_features}")
+
+    # Extract the categorical features from the filtered data
+    X_categorical = X_slice[categorical_features]
+
+    # One-hot encode the categorical features
+    X_categorical = encoder.transform(X_categorical)
+
+    # Extract the numerical features from the filtered data
+    X_numerical = X_slice.drop(columns=categorical_features)
+
+    # Combine the one-hot encoded categorical features and the numerical features
+    X_slice = hstack([X_categorical, X_numerical])
+
+    # Make predictions on the filtered data
+    y_pred = model.predict(X_slice)
+
+    # Compute the precision, recall, and F1 score for the filtered data
+    p, r, fb, _ = compute_model_metrics(y_slice, y_pred, lb)
+
+    return p, r, fb

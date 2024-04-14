@@ -33,14 +33,13 @@ path = # TODO: enter the path for the saved model
 model = load_model(path)
 
 # TODO: create a RESTful API using FastAPI
-app = # your code here
+app = FastAPI
 
 # TODO: create a GET on the root giving a welcome message
 @app.get("/")
 async def get_root():
     """ Say hello!"""
-    # your code here
-    pass
+    return {"message": "Welcoem to the Income Presiction API"}
 
 
 # TODO: create a POST on a different path that does model inference
@@ -65,10 +64,7 @@ async def post_inference(data: Data):
         "native-country",
     ]
     data_processed, _, _, _ = process_data(
-        # your code here
-        # use data as data input
-        # use training = False
-        # do not need to pass lb as input
+        data, cat_features, traning=False,
     )
-    _inference = # your code here to predict the result using data_processed
+    _inference = inference(data_processed, model)
     return {"result": apply_label(_inference)}

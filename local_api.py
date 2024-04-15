@@ -7,10 +7,10 @@ r = requests.get("http://127.0.0.1:8000")
 
 # TODO: print the status code
 # print()
-print("Get status code:", r.status_code)
+print("GET status code:", r.status_code)
 # TODO: print the welcome message
 # print()
-Print("Get responce:", r.text)
+Print("Welcome message from GET request:", r.json()["message"])
 
 
 
@@ -32,11 +32,9 @@ data = {
 }
 
 # TODO: send a POST using the data above
-r = requests.post("http://127.0.0.1:8000/data/", json=data)
+r_post = requests.post("http://127.0.0.1:8000/data/", json=data)
 
 # TODO: print the status code
-# print()
-print("Post status code:", r.status_code)
+print("POST status code:", r_post.status_code)
 # TODO: print the result
-# print()
-print("Post response:", r.text)
+print("POST response:", r_post.json()["result"])

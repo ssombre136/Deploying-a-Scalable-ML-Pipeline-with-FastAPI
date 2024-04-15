@@ -47,10 +47,8 @@ X_test, y_test, _, _ = process_data(
     encoder=encoder,
     lb=lb,
 )
-
 # TODO: use the train_model function to train the model on the training dataset
 model = train_model(X_train, y_train)
-
 # save the model and the encoder
 model_path = os.path.join(project_path, "model", "model.pkl")
 save_model(model, model_path)
@@ -72,7 +70,7 @@ for col in cat_features:
     for slicevalue in sorted(test[col].unique()):
         count = test[test[col] == slicevalue].shape[0]
         p, r, fb = performance_on_categorical_slice(
-            data, col, slicevalue, categorical_features=cat_features, label="salary", encoder=encoder, lb=lb, model=model
+            test, col, slicevalue, categorical_features=cat_features, label="salary", encoder=encoder, lb=lb, model=model
         )
         with open("slice_output.txt", "a") as f:
             print(f"{col}: {slicevalue}, Count: {count:,}", file=f)

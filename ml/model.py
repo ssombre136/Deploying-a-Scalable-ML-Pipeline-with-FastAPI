@@ -130,31 +130,12 @@ def performance_on_categorical_slice(
     fbeta : float
 
     """
-    # Filter the data to include only the rows with the specified categorical feature value
-    X_slice = data[data[column_name] == slice_value].drop(columns=[column_name, label])
-    y_slice = data[data[column_name] == slice_value][label]
-
-    # Check if all of the categorical features are present in the X_slice DataFrame
-    missing_features = set(categorical_features) - set(X_slice.columns)
-    if missing_features:
-        raise ValueError(f"Missing categorical features: {missing_features}")
-
-    # Extract the categorical features from the filtered data
-    X_categorical = X_slice[categorical_features]
-
-    # One-hot encode the categorical features
-    X_categorical = encoder.transform(X_categorical)
-
-    # Extract the numerical features from the filtered data
-    X_numerical = X_slice.drop(columns=categorical_features)
-
-    # Combine the one-hot encoded categorical features and the numerical features
-    X_slice = hstack([X_categorical, X_numerical])
-
+    
+    X_slice, y_slice, _,_ = process_data(X=data, categorical_features=categorical_features, label=label, training=False, encoder=encoder, lb=lb, column_name=column_name, slice_value=slice_value)
     # Make predictions on the filtered data
-    y_pred = model.predict(X_slice)
+    y_pred = inference(model, X_slice)
 
     # Compute the precision, recall, and F1 score for the filtered data
-    p, r, fb, _ = compute_model_metrics(y_slice, y_pred, lb)
+    p, r, fb = compute_model_metrics(y_slice, y_pred)
 
     return p, r, fb

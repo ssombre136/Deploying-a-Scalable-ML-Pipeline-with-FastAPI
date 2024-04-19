@@ -1,5 +1,6 @@
 import pytest
 # TODO: add necessary import
+import os
 import unittest
 from train_model import train
 from train_model import test

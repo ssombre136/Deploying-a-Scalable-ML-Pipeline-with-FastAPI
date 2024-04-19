@@ -10,7 +10,7 @@ r = requests.get("http://127.0.0.1:8000")
 print("GET status code:", r.status_code)
 # TODO: print the welcome message
 # print()
-Print("Welcome message from GET request:", r.json()["message"])
+print("Welcome message from GET request:", r.json()["message"])
 
 
 

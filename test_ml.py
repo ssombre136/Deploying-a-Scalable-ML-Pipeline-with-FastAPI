@@ -32,3 +32,12 @@ def test_train_model():
     this will test to make sure that train_model returns the expected retult
     """
     assert isinstance(model, RandomForestClassifier), "train_model did not return a RandomForestClassifier object"
+    
+#trying something to fix a action error
+def test_model():
+    """
+    test to make sure that the model can be trained and tested using the provided CSV file
+    """
+    csv_path = os.environ['CSV_PATH']
+    data = pd.read_csv(csv_path)
+    

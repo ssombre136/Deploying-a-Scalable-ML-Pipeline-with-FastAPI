@@ -10,7 +10,9 @@ import pandas as pd
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 
-csv_path = "data/census.csv"
+project_path = "/Users/rowanzinn/Deploying-a-Scalable-ML-Pipeline-with-FastAPI"
+csv_path = os.path.join(project_path, "data", "census.csv")
+print(csv_path)
 
 # TODO: implement the first test. Change the function name and input as needed
 def test_data_nulls():

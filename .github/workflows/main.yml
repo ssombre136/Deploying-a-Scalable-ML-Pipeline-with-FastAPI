@@ -55,6 +55,6 @@ jobs:
           PYTHONPATH: ${{ runner.tools.python }}
 
       - name: Test with pytest
-        env:
-          CSV_PATH: ${{ steps.read_csv.outputs.csv_path }}
-        run: pytest test_ml.py
+      run: |
+        conda install pytest
+        pytest

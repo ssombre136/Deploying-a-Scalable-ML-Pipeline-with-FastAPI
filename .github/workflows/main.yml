@@ -23,7 +23,8 @@ jobs:
       - name: Read local CSV file
         id: read_csv
         run: |
-          csv_path= '/home/runner/work/Deploying-a-Scalable-ML-Pipeline-with-FastAPI/Deploying-a-Scalable-ML-Pipeline-with-FastAPI'
+          directory_path= '/home/runner/work/Deploying-a-Scalable-ML-Pipeline-with-FastAPI/Deploying-a-Scalable-ML-Pipeline-with-FastAPI'
+          csv_path= os.path.join(directory_path, "data", "census.csv")
           echo "::set-output name=csv_path::$csv_path"
         env:
           PYTHONPATH: ${{ runner.tools.python }}

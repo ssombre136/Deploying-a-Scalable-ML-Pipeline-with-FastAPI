@@ -10,9 +10,6 @@ import pandas as pd
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 
-project_path = "/Users/rowanzinn/Deploying-a-Scalable-ML-Pipeline-with-FastAPI"
-csv_path = os.path.join(project_path, "data", "census.csv")
-print(csv_path)
 
 # TODO: implement the first test. Change the function name and input as needed
 def test_data_nulls():
@@ -37,14 +34,5 @@ def test_train_model():
     """
     assert isinstance(model, RandomForestClassifier), "train_model did not return a RandomForestClassifier object"
     
-#trying something to fix a action error
-def test_model(csv_path):
-    """
-    test to make sure that the model can be trained and tested using the provided CSV file
-    """
-    data = pd.read_csv(csv_path)
-    # Add your test code here
-    assert data.shape[0] > 0, "CSV file is empty"
 
-test_model(csv_path)
     

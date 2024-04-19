@@ -35,11 +35,13 @@ def test_train_model():
     assert isinstance(model, RandomForestClassifier), "train_model did not return a RandomForestClassifier object"
     
 #trying something to fix a action error
-def test_model():
+def test_model(csv_path):
     """
     test to make sure that the model can be trained and tested using the provided CSV file
     """
-    project_path = "/Users/rowanzinn/Deploying-a-Scalable-ML-Pipeline-with-FastAPI"
-    data_path = os.path.join(project_path, "data", "census.csv")
-    data = pd.read_csv(data_path)
+    data = pd.read_csv(csv_path)
+    # Add your test code here
+
+csv_path = os.environ['CSV_PATH']
+test_model(csv_path)
     

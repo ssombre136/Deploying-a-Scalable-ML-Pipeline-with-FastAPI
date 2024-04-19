@@ -35,7 +35,6 @@ model = load_model(model_path)
 
 # TODO: create a RESTful API using FastAPI
 app = FastAPI()
-print("test A")
 # TODO: create a GET on the root giving a welcome message
 @app.get("/")
 
@@ -43,16 +42,13 @@ async def get_root():
     """ Say hello!"""
     return {"message": "Welcome to the Income Presiction API"}
 
-print("test B")
 # TODO: create a POST on a different path that does model inference
 @app.post("/data/")
 async def post_inference(data: Data):
-    print("Test C")
     # DO NOT MODIFY: turn the Pydantic model into a dict.
     data_dict = data.dict()
     # DO NOT MODIFY: clean up the dict to turn it into a Pandas DataFrame.
     # The data has names with hyphens and Python does not allow those as variable names.
-    print("test D")
     # Here it uses the functionality of FastAPI/Pydantic/etc to deal with this.
     data = {k.replace("_", "-"): [v] for k, v in data_dict.items()}
     data = pd.DataFrame.from_dict(data)
@@ -68,7 +64,8 @@ async def post_inference(data: Data):
         "native-country",
     ]
     data_processed, _, _, _ = process_data(
-        data, categorical_features=cat_features, label="salary", training=True, encoder=encoder, lb=None, column_name=None, slice_value=None
+        data, categorical_features=cat_features, training=False,
+        encoder=encoder,
     )
     _inference = inference(model, data_processed)
     return {"result": apply_label(_inference)}

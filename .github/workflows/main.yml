@@ -55,5 +55,5 @@ jobs:
           PYTHONPATH: ${{ runner.tools.python }}
 
       - name: Test with pytest
-      run: |
-        pytest
+        run: |
+          pytest

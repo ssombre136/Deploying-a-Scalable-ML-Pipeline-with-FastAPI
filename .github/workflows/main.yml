@@ -22,6 +22,12 @@ jobs:
 
       - name: List files in repository
         run: ls -R
+        
+      - name: Read local CSV file
+        run: |
+          csv_path = '${{ github.workspace }}/data/census.csv'
+          data = pd.read_csv(csv_path)
+          print(data.head())
 
       - name: Get flake8 path
         id: get_flake8_path

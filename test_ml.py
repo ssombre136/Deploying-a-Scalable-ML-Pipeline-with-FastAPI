@@ -43,5 +43,7 @@ def test_model(csv_path):
     """
     data = pd.read_csv(csv_path)
     # Add your test code here
+    assert data.shape[0] > 0, "CSV file is empty"
+
 test_model(csv_path)
     

@@ -39,6 +39,7 @@ def test_model():
     """
     test to make sure that the model can be trained and tested using the provided CSV file
     """
-    csv_path = os.environ['CSV_PATH']
-    data = pd.read_csv(csv_path)
+    project_path = "/Users/rowanzinn/Deploying-a-Scalable-ML-Pipeline-with-FastAPI"
+    data_path = os.path.join(project_path, "data", "census.csv")
+    data = pd.read_csv(data_path)
     

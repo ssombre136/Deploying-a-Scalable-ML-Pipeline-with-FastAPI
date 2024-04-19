@@ -4,6 +4,9 @@ import os
 import unittest
 from train_model import train
 from train_model import test
+from train_model import data
+from train_model import data_path
+
 from train_model import cat_features, model, preds
 from ml.model import train_model, performance_on_categorical_slice
 import pandas as pd

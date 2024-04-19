@@ -23,7 +23,7 @@ jobs:
       - name: Read local CSV file
         id: read_csv
         run: |
-          csv_path='data/census.csv' 
+          csv_path='/home/runner/work/Deploying-a-Scalable-ML-Pipeline-with-FastAPI/Deploying-a-Scalable-ML-Pipeline-with-FastAPI' 
           echo "::set-output name=csv_path::$csv_path"
         env:
           PYTHONPATH: ${{ runner.tools.python }}

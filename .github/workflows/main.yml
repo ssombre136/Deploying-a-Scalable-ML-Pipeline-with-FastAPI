@@ -24,16 +24,16 @@ jobs:
 
     - name: Get flake8 path
       id: get_flake8_path
-      run: which flake8
+      run: echo "::set-output name=flake8_path::$(which flake8)"
 
     - name: Lint with flake8
       if: runner.os == 'Linux'
       run: |
         # use the full path to the flake8 command
-        FLAKE8_PATH=$(cat ${{ steps.get_flake8_path.outputs.flake8_path }})
-        python $FLAKE8_PATH . --count --select=E9,F63,F7,F82 --show-source --statistics
+        FLAKE8_PATH=${{ steps.get_flake8_path.outputs.flake8_path }}
+        $FLAKE8_PATH . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        python $FLAKE8_PATH . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        $FLAKE8_PATH . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
     - name: Lint with flake8 (Windows)
       if: runner.os == 'Windows'

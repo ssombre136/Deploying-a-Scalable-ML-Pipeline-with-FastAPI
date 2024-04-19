@@ -20,14 +20,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install flake8 pytest scikit-learn pandas
 
-      - name: List files in repository
-        run: ls -R
-        
       - name: Read local CSV file
+        id: read_csv
         run: |
-          csv_path = '${{ github.workspace }}/data/census.csv'
+          csv_path = '/home/runner/work/Deploying-a-Scalable-ML-Pipeline-with-FastAPI/Deploying-a-Scalable-ML-Pipeline-with-FastAPI/data/census.csv'
           data = pd.read_csv(csv_path)
-          print(data.head())
+          echo "::set-output name=csv_path::$csv_path"
+          echo "::set-output name=data::$(echo -n $data | base64)"
+        env:
+          PYTHONPATH: ${{ runner.tools.python }}
 
       - name: Get flake8 path
         id: get_flake8_path
@@ -41,6 +42,8 @@ jobs:
           $FLAKE8_PATH . --count --select=E9,F63,F7,F82 --show-source --statistics
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           $FLAKE8_PATH . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        env:
+          PYTHONPATH: ${{ runner.tools.python }}
 
       - name: Lint with flake8 (Windows)
         if: runner.os == 'Windows'
@@ -50,7 +53,12 @@ jobs:
           python $FLAKE8_PATH . --count --select=E9,F63,F7,F82 --show-source --statistics
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           python $FLAKE8_PATH . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        env:
+          PYTHONPATH: ${{ runner.tools.python }}
 
       - name: Test with pytest
         run: |
-          pytest
+          csv_path=${{ steps.read_csv.outputs.csv_path }}
+          pytest --csv-path $csv_path
+        env:
+          PYTHONPATH: ${{ runner.tools.python }}

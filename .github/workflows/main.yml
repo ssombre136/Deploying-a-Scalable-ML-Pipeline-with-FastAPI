@@ -25,8 +25,6 @@ jobs:
     - name: Get flake8 path
       id: get_flake8_path
       run: which flake8
-      # save the output to an output variable
-      id: flake8_path
 
     - name: Lint with flake8
       if: runner.os == 'Linux'

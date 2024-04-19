@@ -42,6 +42,7 @@ def test_model(csv_path):
     data = pd.read_csv(csv_path)
     # Add your test code here
 
-csv_path = os.environ['CSV_PATH']
+project_path = "/Users/rowanzinn/Deploying-a-Scalable-ML-Pipeline-with-FastAPI"
+csv_path = os.path.join(project_path, "data", "census.csv")
 test_model(csv_path)
     

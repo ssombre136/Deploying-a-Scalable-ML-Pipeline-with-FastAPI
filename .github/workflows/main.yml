@@ -55,8 +55,6 @@ jobs:
           PYTHONPATH: ${{ runner.tools.python }}
 
       - name: Test with pytest
-        run: |
-          csv_path=${{ steps.read_csv.outputs.csv_path }}
-          pytest test_ml.py $csv_path
         env:
-          PYTHONPATH: ${{ runner.tools.python }}
+          CSV_PATH: ${{ steps.read_csv.outputs.csv_path }}
+        run: pytest test_ml.py

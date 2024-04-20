@@ -3,16 +3,23 @@
 For additional information see the Model Card paper: https://arxiv.org/pdf/1810.03993.pdf
 
 ## Model Details
-
+This is a classification model on Census Bureau data that is publicly available, it has been created by Rowan Zinn for the Deploying a Machine Learning Model with FastAPI (WGU) Udacity course. It was created on April 20th, 2024 and is the first compleated version of the model. 
+To get the model, I compleated the ml/model.py, train_model.py, test_ml.py, main.py, and local_api.py files (in that order). I filled out the ml/model file first due to it contaiing important functions that would be used throughout the rest of the project. Within the train_model file we read in the csv file with the data and split it into train and test data using the train_test_split function and I processed the data using the process_data function. I then  modeled the training data using the train_model function and saved the model and model and the encoder. Lastly I worked with the test data set by using the inference funtion to run the model inferences and I computed the performance of the model slices using the performance_on_categorical_slice function. 
+Next I filed out the test_ml which provided a series of three unit tests to verify that the data and the model work as I intended them to. The first test was to make sure there is no nulls or NaN in the test dataset, this test passed with 33%. The second test was to test that the inference retuned the expected type, this test also passed with a 66%. The last test was to make sure that the train_model retuned the expected result, this last unit test also passed with a 100%. The output of the file can be seen ina  screenshot via the screenshots folder. 
+The last step of this API was to create a RESTful API. To compleate this, i filled out the main.py that implimented a RESTful APU using FastAPI, creating a GET request that gave a welcome message, and creating a POST request that made the model inference. I then went into local_api and sent a GET and print the status code as well as send a POST and get the status of the code. To run the API, I had to ender uvicorn main:app --reload in my terminal to run the API, then I ran local_api.py to get the status code and the result from the GET and POST. The results of this is also in the screenshots folder. 
+The last step of the project is to compleate a GitHub action that would pass a PyTest and a Flake8 test. TO do this I wrote my own action, there is a screenshot of this project passing each workflow as well. 
 ## Intended Use
-
+This model can be used to predict the salary of of various attributes. in the file it is called category_features, or cat_features. That includes: workclass, education, marital-status, occupation, relationship, race, sex, and native-country. This is meant to be used for academic and resarch purposes, mainly for students to use. 
 ## Training Data
-
+The dataset was gotten by forking a repository given by Udacity, it came in a a csv file. The csv file has 32,562 rows and 15 columns, each column was made up of various data types. to train the data we split the data, using test_size=0.2 and random_state=42. The train data was then processed using process_data, which processes the data using One Hot Encoder for the categorical features and a label binarizer for the lable 'salary'. After this data was processed, it was used on performance_on_categorical_slice. 
 ## Evaluation Data
-
+The train data was gotten and processed the same way as the test data. The train data was not put through the performance_on_categorical_slice funcation though. 
 ## Metrics
-_Please include the metrics used and your model's performance on those metrics._
-
+The metrics used were precision, recall, and F1 (also known as F-beta). 
+The precision is 0.7424, the recall is 0.6365, and the F1 is 0.6854.
 ## Ethical Considerations
-
+This data does not contain any any sensative facors, there is no identifying categories and there are no protexted classes. This model can be used to inform human life, it can be used to help people flourish or it can be used to inform them on what kind of life brings in more than 50k. 
+Since there is no sensaitive information in this data, there was no mitigation that was used. There are no stright forward risks or harm that may be present in the model useage, but it can be mentally hard if someone was to look at this model and see that in their current life it is not common to make more than 50k. 
 ## Caveats and Recommendations
+There were no questions that this model raised, but I do suggest to keep in mind this model does not include a persons past in any way. There is no infomation about how they grew up (people who grow up wealthy are more than likly to stay and get more wealthy) or how many years they have been working. There are mamy factors that contribute to how much a person makes, while this dataset is a good start it is not an explanation or a reasoning on why people make more or less than 50k. 
+I recomend to use this model and dataset as a beining to look how salary is affected by everything, but to not let it fully sway an opinion. 

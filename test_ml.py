@@ -3,7 +3,7 @@ import pytest
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
-from ml.model import train_model, compute_model_metrics
+from ml.model import train_model, compute_model_metrics, inference
 
 # TODO: implement the first test. Change the function name and input as needed
 def test_model_returns_randomforestclassifier():
@@ -19,15 +19,17 @@ def test_model_returns_randomforestclassifier():
 
 
 # TODO: implement the second test. Change the function name and input as needed
-def test_model_algorithm_randomforestclassifier():
+def test_model_inference():
     """
-    Using dummy variables tests if model is using RandomForestClassifier for the algorithm
+    Using dummy variables tests if model can perform inference and return correct shape.
     """
-    # Your code here
     row_train = np.random.rand(20, 5)
     col_train = np.random.randint(1, 2, size=20)
+    row_test = np.random.rand(5, 5)
     model = train_model(row_train, col_train)
-    assert model.__class__ is RandomForestClassifier
+    predictions = inference(model, row_test)
+    assert predictions.shape == (5,)
+    assert isinstance(predictions, np.ndarray)
     pass
 
 
